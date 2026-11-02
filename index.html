@@ -1,0 +1,222 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Happy Diwali 🪔</title>
+<meta name="description" content="Create and share beautiful personalized Diwali wishes with your friends and family!">
+
+<style>
+* { box-sizing:border-box; }
+
+body {
+  margin:0;
+  font-family:Arial,sans-serif;
+  color:#fff4d0;
+  text-align:center;
+  min-height:100vh;
+  background:radial-gradient(circle at top,#54200c,#170b20 65%,#090611);
+  overflow-x:hidden;
+}
+
+.container {
+  max-width:500px;
+  margin:auto;
+  padding:35px 20px;
+}
+
+h1 {
+  color:#ffd76a;
+  font-size:38px;
+  text-shadow:0 0 20px #ff9c21;
+}
+
+.subtitle { color:#ffe3b0; }
+
+.diya {
+  font-size:65px;
+  margin:25px 0;
+  animation:glow 1.5s infinite alternate;
+}
+
+@keyframes glow {
+  from { filter:drop-shadow(0 0 5px orange); }
+  to { filter:drop-shadow(0 0 25px gold); }
+}
+
+.card {
+  background:#ffffff12;
+  border:1px solid #ffc45c;
+  border-radius:20px;
+  padding:25px 18px;
+  margin-top:20px;
+  backdrop-filter:blur(8px);
+}
+
+input {
+  width:100%;
+  padding:15px;
+  border-radius:10px;
+  border:1px solid gold;
+  font-size:17px;
+  text-align:center;
+  margin:15px 0;
+}
+
+button {
+  width:100%;
+  padding:15px;
+  border:0;
+  border-radius:30px;
+  background:linear-gradient(90deg,#ff9b19,#ffe17a);
+  color:#481500;
+  font-size:17px;
+  font-weight:bold;
+  margin-top:12px;
+  cursor:pointer;
+}
+
+.share {
+  background:#20b957;
+  color:white;
+}
+
+#result { display:none; }
+
+.wish {
+  font-size:23px;
+  line-height:1.6;
+  color:#ffdf83;
+  margin:20px 0;
+  overflow-wrap:anywhere;
+}
+
+.small {
+  color:#e9c99b;
+  font-size:13px;
+  margin-top:30px;
+}
+
+.spark {
+  position:fixed;
+  pointer-events:none;
+  animation:fall 4s linear infinite;
+  z-index:-1;
+}
+
+@keyframes fall {
+  from { transform:translateY(-10vh) rotate(0); }
+  to { transform:translateY(110vh) rotate(360deg); }
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+  <div class="diya">🪔</div>
+
+  <h1>Happy Diwali!</h1>
+
+  <p class="subtitle">
+    Spread happiness, love and light ❤️
+  </p>
+
+  <div class="card" id="form">
+    <h2>✨ Create Your Special Wish ✨</h2>
+    <p>Enter your name below</p>
+
+    <input id="name" type="text"
+      maxlength="40" placeholder="Enter your name">
+
+    <button onclick="createWish()">
+      Create My Diwali Wish 🪔
+    </button>
+  </div>
+
+  <div class="card" id="result">
+    <h2>🎉 A Special Wish For You 🎉</h2>
+
+    <div class="diya">🪔</div>
+
+    <div class="wish" id="message"></div>
+
+    <p>May your life shine with happiness!</p>
+
+    <button class="share" onclick="shareWish()">
+      Share on WhatsApp 💚
+    </button>
+
+    <button onclick="createAnother()">
+      Create Another Wish ✨
+    </button>
+  </div>
+
+  <p class="small">
+    Made with ❤️ | Spread the light of Diwali
+  </p>
+
+</div>
+
+<script>
+function createWish() {
+  const name = document.getElementById("name").value.trim();
+
+  if (!name) {
+    alert("Please enter your name!");
+    return;
+  }
+
+  showWish(name);
+}
+
+function showWish(name) {
+  document.getElementById("form").style.display = "none";
+  document.getElementById("result").style.display = "block";
+
+  document.getElementById("message").textContent =
+    "Happy Diwali, " + name + "! 🪔 Wishing you and your family endless happiness, prosperity and success! ❤️";
+
+  history.replaceState(null, "", "?name=" + encodeURIComponent(name));
+}
+
+function shareWish() {
+  const url = window.location.href;
+  const message = "🪔 Happy Diwali! Someone has sent you a special wish. Open here: " + url;
+
+  window.open(
+    "https://wa.me/?text=" + encodeURIComponent(message),
+    "_blank"
+  );
+}
+
+function createAnother() {
+  history.replaceState(null, "", window.location.pathname);
+  document.getElementById("result").style.display = "none";
+  document.getElementById("form").style.display = "block";
+  document.getElementById("name").value = "";
+}
+
+const params = new URLSearchParams(window.location.search);
+const visitorName = params.get("name");
+
+if (visitorName) {
+  showWish(visitorName);
+}
+
+// Festive falling stars
+for (let i = 0; i < 18; i++) {
+  const star = document.createElement("div");
+  star.className = "spark";
+  star.textContent = "✨";
+  star.style.left = Math.random() * 100 + "%";
+  star.style.animationDelay = Math.random() * 4 + "s";
+  star.style.fontSize = (12 + Math.random() * 15) + "px";
+  document.body.appendChild(star);
+}
+</script>
+
+</body>
+</html>
